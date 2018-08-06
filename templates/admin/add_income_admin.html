@@ -1,0 +1,18 @@
+{% extends 'admin/base_admin.html'%} 
+{% block content %}
+
+
+                    {% if request.is_urgent %}
+                        <div class=" request_header col s9 urgent_request">
+                    {% else %}
+                        <div class=" request_header col s9">
+                    {% endif %}
+                    <strong>{{request.request_name}}</strong> - {{request.due_date}} 
+                    {{request.first_name}} {{request.last_name}} 
+                    
+                
+                     
+      
+        {% endfor %}
+
+   {% endblock %}

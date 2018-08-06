@@ -14,11 +14,12 @@
     <header>
         <nav>
             <div class="nav-wrapper">
-                <a href="{{url_for('get_index')}}" class="brand-logo"></a>
+                <a href="{{url_for('get_index')}}" class="brand-logo">Admin</a>
                 <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><a href="{{url_for('get_index')}}">Home</a></li>
-                    <li><a href="{{url_for('add_request_user')}}">requests</a></li>
+                    <li><a href="{{url_for('get_requests_admin')}}">home</a></li>
+                    <li><a href="{{url_for('add_request_admin')}}">requests</a></li>
+                    <li><a href="{{url_for('add_income_admin')}}">add income</a></li>
 
                 </ul>
                 </ul>

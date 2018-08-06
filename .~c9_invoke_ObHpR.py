@@ -77,10 +77,13 @@ def filter_today_admin():
  
  #dirty--harry---code----- 
   
-@app.route("/admin/add_income_admin")
-def add_income_admin():
-    requests=mongo.db.requests.find()
-    return render_template("admin/add_income_admin.html")
+@app.route("/admin/add_income_admin/")
+def add_income_admin(print):
+    
+    return redirect(url_for("admin/add_income_admin.html")) 
+
+
+
     
 
 
