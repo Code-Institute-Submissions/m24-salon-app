@@ -1,9 +1,10 @@
-{% extends 'base.html'%}
+{% extends 'base.html'%} 
 {% block content %}
 
 <div class="row">
 
-
+   
+    
     
     <ul class="collapsible" data-collapsible="accordion">
         {% for request in requests %}
@@ -11,7 +12,7 @@
             <div class="collapsible-header">
                 <div class="col s3">
                     <i class="material-icons">expand_more</i>
-                    <a href="{{url_for('delete_request', request_id=request._id)}}" class="waves-effect waves-light btn btn_small">Done</a>
+                    <a href="#modal1" class="delete_request_btn waves-effect waves-light btn btn_small modal-trigger" data-requestid={{request._id}}>Done</a>
                     <a href="{{url_for('edit_request', request_id=request._id)}}" class="waves-effect waves-light btn btn_small blue">Edit</a>
                     
                 </div>
@@ -20,18 +21,22 @@
                     {% else %}
                         <div class=" request_header col s9">
                     {% endif %}
-                    <strong>{{request.request_name}}</strong> - {{request.due_date}}
+                    <strong>{{request.request_name}}</strong> - {{request.due_date}} <br>
+                    {{request.first_name}} {{request.last_name}} {{mobile}}
                 </div>
             </div>
             <div class="collapsible-body">
                 <span>
-                {{request.request_description}}
+                    {{request.description_name}}
             </span>
             </div>
         </li>
         {% endfor %}
-        
-            <!-- Modal Structure -->
+
+    </ul>
+    
+    
+    <!-- Modal Structure -->
     <div id="modal1" class="modal center-align">
         <div class="modal-content">
             <h4>Are you sure?</h4>
@@ -54,6 +59,11 @@
     </div>
            
 </div>
+{% endblock %}
 
-        {% endblock %}
+
+
+
+        
+        
         

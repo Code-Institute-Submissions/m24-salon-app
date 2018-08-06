@@ -1,11 +1,11 @@
-{% extends 'base.html'%} {% block content %}
+{% extends 'base.html'%} 
+{% block content %}
 
 <h3>Edit Request</h3>
 
 <div class="row">
     <form action="{{ url_for('update_request', request_id=request._id) }}" method="POST" class="col s12">
 
-        {% for request in requests %}
         <div class="row">
             <div class="input-field col s6">
                 <i class="material-icons prefix">poll</i>
@@ -75,5 +75,5 @@
         $('#due_date').pickadate('picker').set('select', due_date, {format: "dd/mm/yyyy"}).trigger('change');
     });    
 </script>
-{% endfor %} {% endblock %}
 
+{% endblock %}

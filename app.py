@@ -29,8 +29,10 @@ def insert_request():
 
 @app.route("/edit_request")
 def edit_request():
-    requests = mongo.db.requests.find()
-    return render_template('edit_request.html', requests=requests)
+    request_id = request.args['request_id']
+    
+    req = mongo.db.requests.find_one({"_id": ObjectId(request_id)})
+    return render_template('edit_request.html', request=req)
     
 #dirty code---------------written--scum--faced--steve!---- 
 @app.route("/")
@@ -38,20 +40,20 @@ def edit_request():
 @app.route("/get_request_by_requests/<first_name>")
 def get_requests(request_name=None):
     if request_name:
-        request=mongo.db.request.find({"first_name": request_name})
+        requests=mongo.db.requests.find({"first_name": request_name})
     else:
         requests=mongo.db.requests.find()
         
     return render_template("appointments.html", requests=requests)
 
 
-@app.route("/update_request", methods=['POST'])
+@app.route("/update_request/<request_id>", methods=['POST'])
 def update_request(request_id):
     requests = mongo.db.request
     requests.update({"_id": ObjectId(request_id)}, request.form.to_dict())
-    return redirect(url_for("get_request")) 
+    return redirect(url_for("get_requests")) 
 
-@app.route("/delete_request", methods=["POST"])
+@app.route("/delete_request/", methods=["POST"])
 def delete_request():
     request_id = request.form['request_id']
     mongo.db.requests.remove({"_id": ObjectId(request_id)})

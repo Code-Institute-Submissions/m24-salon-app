@@ -1,0 +1,62 @@
+{% extends 'base.html'%}
+{% block content %}
+
+<div class="row">
+
+
+    
+    <ul class="collapsible" data-collapsible="accordion">
+        {% for request in requests %}
+        <li>
+            <div class="collapsible-header">
+                <div class="col s3">
+                    <i class="material-icons">expand_more</i>
+                    <form method="post" action="{{url_for('delete_request')}}">
+                        <input type="hidden" name="request_id" value="{{request._id}}"/>
+                        <button class="waves-effect waves-light btn btn_small">Done</button>
+                    </form>
+                    <a href="{{url_for('edit_request', request_id=request._id)}}" class="waves-effect waves-light btn btn_small blue">Edit</a>
+                    
+                </div>
+                    {% if request.is_urgent %}
+                        <div class=" request_header col s9 urgent_request">
+                    {% else %}
+                        <div class=" request_header col s9">
+                    {% endif %}
+                    <strong>{{request.request_name}}</strong> - {{request.due_date}}
+                </div>
+            </div>
+            <div class="collapsible-body">
+                <span>
+                {{request.request_description}}
+            </span>
+            </div>
+        </li>
+        {% endfor %}
+        
+            <!-- Modal Structure -->
+    <div id="modal1" class="modal center-align">
+        <div class="modal-content">
+            <h4>Are you sure?</h4>
+        </div>
+    
+        <div class="row modal-footer">
+            <form action="{{ url_for('delete_request') }}" method="POST" class="col s6 center-align">
+                <input id="hidden-request-id" type="hidden" name="request_id">
+                <button class="testing btn waves-effect waves-light margin-left" type="submit" name="action">Yes
+                    <i class="material-icons right">thumb_up</i>
+                </button>
+            </form>
+    
+            <form action="{{ url_for('get_requests') }}" method="GET" class="col s6 center-align">
+                <button class="btn waves-effect waves-light margin-left" type="submit" name="action">No
+                    <i class="material-icons right">thumb_down</i>
+                </button>
+            </form>
+        </div>
+    </div>
+           
+</div>
+
+        {% endblock %}
+        
