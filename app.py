@@ -11,6 +11,8 @@ app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 
 mongo = PyMongo(app)
 
+
+
 # User
 
 @app.route("/")
@@ -32,7 +34,7 @@ def insert_request_user():
 
 
 # Admin
-@app.route("/admin")
+@app.route("/admin/")
 def get_requests_admin():
     requests=mongo.db.requests.find()
     return render_template("admin/appointments_admin.html", requests=requests)
@@ -68,22 +70,25 @@ def delete_request_admin():
     mongo.db.requests.remove({"_id": ObjectId(request_id)})
     return redirect(url_for("get_requests_admin"))
   
-  
 @app.route("/admin/filter_today")
 def filter_today_admin():
     todays_date = datetime.datetime.today().strftime('%-d %B, %Y')
     filtered_requests = mongo.db.requests.find({"due_date": todays_date})
     return render_template("admin/appointments_admin.html", requests=filtered_requests)
+    
+@app.route("/admin/add_transaction_admin")
+def add_transaction_admin():
+    mongo.db.transactions.insert_one(request.form.to_dict())
+    services = mongo.db.services.find()
+    suppliers = mongo.db.suppliers.find()
+    requests=mongo.db.requests.find()
+    
+    
+    return render_template("admin/add_transaction_admin.html", services=services,suppliers=suppliers, requests=requests)
  
  #dirty--harry---code----- 
   
-@app.route("/admin/add_income_admin")
-def add_income_admin():
-    requests=mongo.db.requests.find()
-    return render_template("admin/add_income_admin.html")
     
-
-
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
