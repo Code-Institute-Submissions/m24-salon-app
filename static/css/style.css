@@ -33,10 +33,9 @@ h1, h2, h3, h4, h5, h6{
 }
 
 .m24logo img {
-    margin-top:10px;
-    height: 200px;
-
-
+    z-index: -10;
+    margin-top:30px;
+    width: 800px;
 }
 
 .address {
@@ -66,3 +65,25 @@ h1, h2, h3, h4, h5, h6{
 background-color:#6dbdc6;
                     
 }
+
+
+.moneyin{
+
+float: left;
+ 
+margin-right:10px;
+}
+.moneyout{
+    float:left;
+margin-left: 50px;
+ 
+}
+
+
+.total{
+
+
+
+
+}
+
