@@ -118,10 +118,11 @@ def delete_admin_transaction_admin():
     mongo.db.transactions.remove({"_id": ObjectId(transaction_id)})
     return redirect(url_for("get_transactions_admin"))
 
-@app.route("/admin/get_admin_graphs", methods=['GET'])
-def get_admin_graph_admin():
+@app.route("/admin/get_graphs_admin", methods=['GET'])
+def get_graphs_admin():
     graphs=mongo.db.transactions.find()
-    return render_template("admin/show_graph_admin.html" )
+    return render_template("admin/show_graphs_admin.html" )
+
 
 
 

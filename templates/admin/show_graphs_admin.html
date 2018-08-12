@@ -1,0 +1,87 @@
+{% extends 'admin/base_admin.html'%} {% block content %}
+
+
+    <h3>all graphs</h3>
+     <a href="javascript:dc.filterAll(); dc.renderAll();"><strong>Reset All</strong></a>
+    <div id="chart-goes-here"></div></a>
+    <div id="pie-chart-goes-here"></div>
+    <div id="service-chart-goes-here"></div></a>
+    <script>
+        let transactionsData = [
+            { "month": "jan", "service": "cut and dry",   "period": "1st quarter", "income": 200},
+            { "month": "feb", "service": "Cleanse, Condition, Cut & Finish", "period": "1st quarter", "income": 200 },
+            { "month": "mar", "service": "cut and dry",   "period": "1st quarter", "income": 200 },
+            { "month": "apr", "service": "cut and dry",   "period": "2nd quarter", "income": 200 },
+            { "month": "may", "service": "Cleanse, Condition, Cut & Finish", "period": "2nd quarter", "income": 200 },
+            { "month": "jun", "service": "Cleanse, Condition, Cut & Finish", "period": "2nd quarter", "income": 200 },
+            { "month": "jul", "service": "cut and dry",   "period": "3rd quarter", "income": 200 },
+            { "month": "aug", "service": "Cleanse, Condition, Cut & Finish", "period": "3rd quarter", "income": 200 },
+            { "month": "sept","service": "Cleanse, Condition, Cut & Finish", "period": "3rd quarter", "income": 200 },
+            { "month": "oct", "service": "Cleanse, Condition, Cut & Finish", "period": "4th quarter", "income": 200 },
+            { "month": "nov", "service": "Cleanse, Condition, Cut & Finish", "period": "4th quarter", "income": 200 },
+            { "month": "dec", "service": "Cleanse, Condition, Cut & Finish", "period": "4th quarter", "income": 200 },
+
+        ];
+
+    let colors = ["red","blue","orange","green","yellow","green","red","blue"];
+
+
+        let ndx = crossfilter(transactionsData);
+        
+        let monthDim = ndx.dimension(dc.pluck("month"));
+        let periodDim = ndx.dimension(dc.pluck("period"));
+        let serviceDim = ndx.dimension(dc.pluck("service"));
+
+        
+        //define groups
+        
+        // let monthDim = ndx.dimensions(function(d));
+        let totalmoneyin = monthDim.group().reduceSum(dc.pluck("income"));
+        let totalincomePerperiod = periodDim.group().reduceSum(dc.pluck("income"));
+        let totalincomePerservice = serviceDim.group().reduceSum(dc.pluck("income"));
+
+        
+        // charts
+        let incomeChart = dc.barChart("#chart-goes-here");
+        
+        let periodChart = dc.pieChart("#pie-chart-goes-here");
+        let incomeChart1 = dc.barChart("#service-chart-goes-here");
+        
+        
+         // charts
+        incomeChart
+            .width(700)
+            .height(200)
+            .margins({top:10, right: 50, bottom:30, left:50})
+            .dimension(monthDim)
+            .group(totalmoneyin)
+            .x(d3.scale.ordinal())
+            .xUnits(dc.units.ordinal)
+            .xAxisLabel("monthly income")
+            .yAxisLabel("euros")
+            .yAxis().ticks(4);
+            
+             incomeChart1
+            .width(700)
+            .height(200)
+            .margins({top:10, right: 50, bottom:50, left:50})
+            .dimension(monthDim)
+            .group(totalincomePerservice)
+            .x(d3.scale.ordinal())
+            .xUnits(dc.units.ordinal)
+            .yAxis().ticks(10);
+
+
+            
+
+        periodChart
+            .height(300)
+            .radius(200)
+            .dimension(periodDim)
+            .group(totalincomePerperiod);
+        dc.renderAll();
+ 
+    </script>
+   
+
+        <hr> {% endblock %}
