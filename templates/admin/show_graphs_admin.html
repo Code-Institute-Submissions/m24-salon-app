@@ -2,50 +2,59 @@
 
 
     <h3>all graphs</h3>
-     <a href="javascript:dc.filterAll(); dc.renderAll();"><strong>Reset All</strong></a>
+    <a href="javascript:dc.filterAll(); dc.renderAll();"><strong>Reset All</strong></a>
     <div id="chart-goes-here"></div></a>
     <div id="pie-chart-goes-here"></div>
-    <div id="service-chart-goes-here"></div></a>
+    <div id="descr-chart-goes-here"></div></a>
     <script>
-        let transactionsData = [
-            { "month": "jan", "service": "cut and dry",   "period": "1st quarter", "income": 200},
-            { "month": "feb", "service": "Cleanse, Condition, Cut & Finish", "period": "1st quarter", "income": 200 },
-            { "month": "mar", "service": "cut and dry",   "period": "1st quarter", "income": 200 },
-            { "month": "apr", "service": "cut and dry",   "period": "2nd quarter", "income": 200 },
-            { "month": "may", "service": "Cleanse, Condition, Cut & Finish", "period": "2nd quarter", "income": 200 },
-            { "month": "jun", "service": "Cleanse, Condition, Cut & Finish", "period": "2nd quarter", "income": 200 },
-            { "month": "jul", "service": "cut and dry",   "period": "3rd quarter", "income": 200 },
-            { "month": "aug", "service": "Cleanse, Condition, Cut & Finish", "period": "3rd quarter", "income": 200 },
-            { "month": "sept","service": "Cleanse, Condition, Cut & Finish", "period": "3rd quarter", "income": 200 },
-            { "month": "oct", "service": "Cleanse, Condition, Cut & Finish", "period": "4th quarter", "income": 200 },
-            { "month": "nov", "service": "Cleanse, Condition, Cut & Finish", "period": "4th quarter", "income": 200 },
-            { "month": "dec", "service": "Cleanse, Condition, Cut & Finish", "period": "4th quarter", "income": 200 },
+    
+    
+    queue()
+       .defer(d3.json, "/data")
+       .await(makeGraphs);
+    
+    function makeGraphs(error, transactionsData) {
 
-        ];
+        
+    
+    var parseDate = d3.time.format("%d %B, %Y").parse;
+
+    transactionsData.forEach(function(d) {
+        d.due_date = parseDate(d.due_date)
+        
+        console.log(d.due_date.getMonth())
+        month = d.due_date.getMonth()
+        if(month < 3) {d.period = "1st Quarter";} 
+        else if (month < 6) {d.period = "2nd Quarter";} 
+        else if (month < 9) {d.period = "3rd Quarter";} 
+        else if (month < 12) {d.period = "4rd Quarter";}
+           
+        
+    })
+    
 
     let colors = ["red","blue","orange","green","yellow","green","red","blue"];
 
 
         let ndx = crossfilter(transactionsData);
         
-        let monthDim = ndx.dimension(dc.pluck("month"));
+        let due_dateDim = ndx.dimension(dc.pluck("due_date"));
         let periodDim = ndx.dimension(dc.pluck("period"));
-        let serviceDim = ndx.dimension(dc.pluck("service"));
+        let descrDim = ndx.dimension(dc.pluck("descr"));
 
-        
+
         //define groups
         
-        // let monthDim = ndx.dimensions(function(d));
-        let totalmoneyin = monthDim.group().reduceSum(dc.pluck("income"));
-        let totalincomePerperiod = periodDim.group().reduceSum(dc.pluck("income"));
-        let totalincomePerservice = serviceDim.group().reduceSum(dc.pluck("income"));
+        // let due_dateDim = ndx.dimensions(function(d));
+        let totalmoneyin = due_dateDim.group().reduceSum(dc.pluck("moneyin"));
+        let totalincomePerperiod = periodDim.group().reduceSum(dc.pluck("moneyin"));
+        let totalincomePerdescr = descrDim.group().reduceSum(dc.pluck("moneyin"));
 
         
         // charts
         let incomeChart = dc.barChart("#chart-goes-here");
-        
         let periodChart = dc.pieChart("#pie-chart-goes-here");
-        let incomeChart1 = dc.barChart("#service-chart-goes-here");
+        let incomeChart1 = dc.barChart("#descr-chart-goes-here");
         
         
          // charts
@@ -53,11 +62,11 @@
             .width(700)
             .height(200)
             .margins({top:10, right: 50, bottom:30, left:50})
-            .dimension(monthDim)
+            .dimension(due_dateDim)
             .group(totalmoneyin)
-            .x(d3.scale.ordinal())
+            .x(d3.scale.ordinal().domain(["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]))
             .xUnits(dc.units.ordinal)
-            .xAxisLabel("monthly income")
+            .xAxisLabel("income")
             .yAxisLabel("euros")
             .yAxis().ticks(4);
             
@@ -65,8 +74,8 @@
             .width(700)
             .height(200)
             .margins({top:10, right: 50, bottom:50, left:50})
-            .dimension(monthDim)
-            .group(totalincomePerservice)
+            .dimension(due_dateDim)
+            .group(totalincomePerdescr)
             .x(d3.scale.ordinal())
             .xUnits(dc.units.ordinal)
             .yAxis().ticks(10);
@@ -80,6 +89,7 @@
             .dimension(periodDim)
             .group(totalincomePerperiod);
         dc.renderAll();
+    }
  
     </script>
    

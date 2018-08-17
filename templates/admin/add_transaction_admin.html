@@ -1,9 +1,10 @@
 {% extends 'admin/base_admin.html'%} {% block content %}
 
 
-<h3>Add transaction</h3>
+<h4>Add transaction</h4>
 
- <form action="{{ url_for('add_transaction_admin')}}" method="POST" class="col s12">
+
+<form action="{{ url_for('add_transaction_admin')}}" method="POST" class="col s12">
   <div class="row">
     <div class="input-field col s12">
       <i class="material-icons prefix">today</i>
@@ -11,12 +12,12 @@
       <label for="icon_prefix">choose a date of transaction</label>
     </div>
   </div>
- </div>
+
 
   <div class="row">
     <div class="input-field col s12">
       <i class="material-icons prefix">poll</i>
-      <select id="services" name="sevice_name">
+          <select id="services" name="sevice_name">
           <option value="" disabled selected>Choose hair treatment </option>
           {% for service in services %}          
           <option value="{{service.service_name}}">{{ service.service_name }}</option>
@@ -29,7 +30,7 @@
   <div class="row">
     <div class="input-field col s12">
       <i class="material-icons prefix">poll</i>
-      <select id="request" name="first_name">
+      <select id="request" name="customer_detail">
           <option value="" disabled selected>Choose customer</option>
           {% for request in requests %}          
           <option value="{{request.first_name }}"><i class="fab fa-telegram">{{ request.mobile }}</i> {{ request.first_name}} {{request.last_name }} <a href="mailto:{{request.email}}"><i class="fas fa-phone-square"></a></option>
@@ -55,7 +56,7 @@
   <div class="row">
     <div class="input-field col s12">
       <i class="material-icons prefix ">euro_symbol add_circle_outline</i>
-      <input id="moneyin" name="moneyin" type="number" class="validate">
+      <input value="0.00" id="moneyin" name="moneyin" type="number" class="validate">
       <label for="icon_prefix "></label>
     </div>
   </div>
@@ -63,7 +64,7 @@
   <div class="row">
     <div class="input-field col s12">
       <i class="material-icons prefix">euro_symbol indeterminate_check_box</i>
-      <input id="moneyout" name="moneyout" type="number" class="validate">
+      <input value="0.00" id="moneyout" name="moneyout" type="number" class="validate">
       <label for="icon_prefix"></label>
     </div>
   </div>
@@ -75,23 +76,27 @@
       <label for="icon_prefix">extra note</label>
     </div>
   </div>
-
-  <div class="row">
+  
+    <div class="row">
     <div class="input-field col s12">
       <i class="material-icons prefix">assignment</i>
-      <input id="email" name="email" type="text" class="validate">
-      <label for="icon_prefix">extra note</label>
+      <input id="mobile" name="mobile" type="text" class="validate">
+      <label for="icon_prefix">mobile</label>
     </div>
   </div>
 
-  <div class=" row ">
-    <div class="input-field col s12 ">
-      <i class="material-icons prefix ">assignment</i>
-      <input id="mobile " name="mobile " type="text " class="validate ">
-      <label for="icon_prefix ">Mobile</label>
-    </div>
-  </div>
+  
+  
 
-  <button class="btn waves-effect waves-light " type="submit " name="action ">Submit transaction
+<div class=" row ">
+  <button class="btn waves-effect waves-light " type="submit" >Submit
       <i class="material-icons right ">add_identity</i>
-    </button> {% endblock content %}
+    </button> 
+  </div>  
+    
+    
+    
+    </form>
+    
+    {% endblock content %}
+

@@ -4,14 +4,14 @@ from flask import Flask, render_template, redirect, request, url_for
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from decimal import Decimal
+import json
+
 
 app = Flask(__name__)
 app.config["MONGO_DBNAME"] = 'm24_salon_app'
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 
 mongo = PyMongo(app)
-
-
 
 # User
 
@@ -30,8 +30,6 @@ def add_request_user():
 def insert_request_user():
     mongo.db.requests.insert_one(request.form.to_dict())
     return redirect(url_for('get_index'))
-
-
 
 # Admin
 @app.route("/admin/")
@@ -88,31 +86,47 @@ def get_transactions_admin():
         total_income += transaction['moneyin']
         total_outgoing += transaction['moneyout']
     
-    
-        balance = total_income - total_outgoing
-        return render_template("admin/show_transactions_admin.html", transactions=transactions, total_income=total_income, total_outgoing=total_outgoing, balance=balance)        
+
+    balance = total_income - total_outgoing
+    return render_template("admin/show_transactions_admin.html", transactions=transactions, total_income=total_income, total_outgoing=total_outgoing, balance=balance)        
  
- #---------------------------dirty--friday----------------------------#
  
 
+@app.route("/data")
+def get_data():
+    transactions = mongo.db.transactions.find({}, {'_id': False})
+    list_transactions = []
+    for t in transactions:
+        list_transactions.append(t)
+    return json.dumps(list_transactions)
+        
+ 
+ 
+ 
+ 
+ #---------------------------dirty--friday----------------------------#
 
 @app.route("/admin/add_transaction_admin", methods=['POST', 'GET'])
 def add_transaction_admin():
-    mongo.db.transactions.insert_one(request.form.to_dict())
-    mongo.db.suppliers.insert_one(request.form.to_dict())
-    mongo.db.requests.insert_one(request.form.to_dict())
+    if request.method == "POST":
+        form_data = request.form.to_dict()
+        form_data['moneyin'] = float(form_data['moneyin'])
+        form_data['moneyout'] = float(form_data['moneyout'])
+        mongo.db.transactions.insert_one(form_data)
+        
+        return redirect('/admin/show_transactions_admin')
+        
     services = mongo.db.services.find()
     suppliers = mongo.db.suppliers.find()
     transactions = mongo.db.transactions.find()
     requests=mongo.db.requests.find()
     
-
-    
-    return render_template("admin/add_transaction_admin.html",  services=services, suppliers=suppliers, transactions=transactions, requests=requests)
+    return render_template("admin/add_transaction_admin.html", services=services,  transactions=transactions 
+    , suppliers=suppliers, requests=requests)
  #---------------------------
 
 
-@app.route("/admin/admin_delete_transaction", methods=["GET" , "POST"] )
+@app.route("/admin/admin_delete_transaction", methods=[ "POST"] )
 def delete_admin_transaction_admin():
     transaction_id = request.form['transaction_id']
     mongo.db.transactions.remove({"_id": ObjectId(transaction_id)})
@@ -122,13 +136,6 @@ def delete_admin_transaction_admin():
 def get_graphs_admin():
     graphs=mongo.db.transactions.find()
     return render_template("admin/show_graphs_admin.html" )
-
-
-
-
-
-
-
 
 
 if __name__ == "__main__":

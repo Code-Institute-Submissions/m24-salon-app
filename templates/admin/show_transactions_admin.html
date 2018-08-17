@@ -2,10 +2,10 @@
 
 <div class="row">
 
-    <a href="{{url_for('filter_today_admin')}}">today</a>
+    <!--<a href="{{url_for('filter_today_admin')}}">today</a>-->
     <ul class="pagination">
         <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-        <li class="active"><a href="#!">1</a></li>
+        <li class="active #4db6ac teal lighten-2"><a href="#!">1</a></li>
         <li class="waves-effect"><a href="#!">2</a></li>
         <li class="waves-effect"><a href="#!">3</a></li>
         <li class="waves-effect"><a href="#!">4</a></li>
@@ -14,10 +14,11 @@
     </ul>
 
 
-    <h3>all transactions</h3>
+    <h3>all transactions<a href="{{url_for('add_transaction_admin')}}">
+    <i class="material-icons prefix" >add_circle_outline</i></a></h3>
     <div class="col s12">
         <hr>
-<p><strong>Total credit € {{ total_outgoing }}<br>Total debit € {{ total_income }}<br>balance {{balance}}</div>
+<p><strong>Total credit € {{ total_income }}<br>Total debit € {{ total_outgoing }}<br>balance {{balance}}</div>
 </strong><br><br><br><br></p><hr>
     </row>
         <ul class="collapsible" data-collapsible="accordion">
@@ -79,3 +80,22 @@
 
         </div>
         <hr> {% endblock %}
+        <script>
+            
+            $('pagination').materializePagination({
+2
+  lastPage: 100,
+3
+  firstPage:  1,
+4
+  align: 'left',
+5
+  urlParameter: 'page',
+6
+  useUrlParameter: true,
+7
+  onClickCallback: function(){}
+8
+});
+
+        </script>

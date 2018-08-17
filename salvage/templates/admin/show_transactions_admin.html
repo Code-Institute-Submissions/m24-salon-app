@@ -1,0 +1,81 @@
+{% extends 'admin/base_admin.html'%} {% block content %}
+
+<div class="row">
+
+    <a href="{{url_for('filter_today_admin')}}">today</a>
+    <ul class="pagination">
+        <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+        <li class="active"><a href="#!">1</a></li>
+        <li class="waves-effect"><a href="#!">2</a></li>
+        <li class="waves-effect"><a href="#!">3</a></li>
+        <li class="waves-effect"><a href="#!">4</a></li>
+        <li class="waves-effect"><a href="#!">5</a></li>
+        <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+    </ul>
+
+
+    <h3>all transactions</h3>
+    <div class="col s12">
+        <hr>
+<p><strong>Total credit € {{ total_outgoing }}<br>Total debit € {{ total_income }}<br>balance {{balance}}</div>
+</strong><br><br><br><br></p><hr>
+    </row>
+        <ul class="collapsible" data-collapsible="accordion">
+            {% for transaction in transactions %}
+
+            <li>
+                <div class="collapsible-header">
+                    <div class="col s3">
+
+                        <i class="material-icons">expand_more</i>
+                        <a href="#modal1" class="delete_request_btn waves-effect waves-light btn btn_small modal-trigger" data-requestid={{request._id}}>Done</a>
+                        <a href="{{url_for('edit_request_admin', request_id=request._id)}}" class="waves-effect waves-light btn btn_small blue">Edit</a>
+                    </div>
+                    <a href="tel:{{transaction.mobile}}"><i class="material-icons prefix" >phone</i></a> {% if request.is_urgent %}
+                    <div class=" request_header col s9 urgent_request">
+                        {% else %}
+                        <div class=" request_header col s9">
+                            {% endif %}
+                            <strong>{{transaction.client}}</strong> {{transaction.due_date}} {{transaction.decscwrite}}
+                            <div class="moneyout">-{{transaction.moneyout}}
+                                <div class="moneyin">+ {{transaction.moneyin}} </div>
+
+
+                            </div>
+                        </div>
+                        <div class="collapsible-body">
+                            <span>
+                    {{transaction.misc}}
+            </span>
+                        </div>
+            </li>
+            {% endfor %}
+
+        </ul>
+
+
+        <!-- Modal Structure -->
+        <div id="modal1" class="modal center-align">
+            <div class="modal-content">
+                <h4>Are you sure?</h4>
+            </div>
+
+            <div class="row modal-footer">
+                <form action="{{ url_for('delete_request_admin') }}" method="POST" class="col s6 center-align">
+                    <input id="hidden-request-id" type="hidden" name="request_id">
+                    <button class="testing btn waves-effect waves-light margin-left" type="submit" name="action">Yes
+                    <i class="material-icons right">thumb_up</i>
+                </button>
+
+                </form>
+
+                <form action="{{ url_for('get_requests_admin') }}" method="GET" class="col s6 center-align">
+                    <button class="btn waves-effect waves-light margin-left" type="submit" name="action">No
+                    <i class="material-icons right">thumb_down</i>
+                </button>
+                </form>
+            </div>
+        </div>
+
+        </div>
+        <hr> {% endblock %}
