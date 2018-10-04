@@ -15,6 +15,7 @@
     
     
     <link rel="icon" type="static/image/png" href="static/images/favicon.png">
+
 </head>
 
 <body>
@@ -26,9 +27,9 @@
                 <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
                     <li><a href="{{url_for('get_requests_admin')}}">Appointments</a></li>
-                    <li><a href="{{url_for('get_transactions_admin')}}">show transactions</a></li>
-                    <li><a href="{{url_for('get_graphs_admin')}}">graphs</a></li>
-                   
+                    <li><a href="{{ url_for('show_transactions_admin')}}">Transactions</a></i>
+                    <li><a href="{{url_for('get_graphs_admin')}}">Graphs</a></li>
+
 
                 </ul>
                 </ul>
@@ -68,6 +69,10 @@
             
         $('.modal').modal();
         
+
+
+
+      
         
     </script>
 </body>

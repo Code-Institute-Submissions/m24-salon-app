@@ -35,7 +35,7 @@ def insert_request_user():
 @app.route("/admin/")
 def get_requests_admin():
     requests=mongo.db.requests.find()
-    return render_template("admin/appointments_admin.html", requests=requests)
+    return render_template("admin/show_appointments_admin.html", requests=requests)
 
 @app.route("/admin/add_request_admin")
 def add_request_admin():
@@ -75,8 +75,8 @@ def filter_today_admin():
     return render_template("admin/appointments_admin.html", requests=filtered_requests)
     
   
-@app.route("/admin/show_transactions_admin")
-def get_transactions_admin():
+@app.route("/admin/show_graphs_admin")
+def show_graphs_admin():
 
     total_income = 0.0
     total_outgoing = 0.0
@@ -88,7 +88,7 @@ def get_transactions_admin():
     
 
     balance = total_income - total_outgoing
-    return render_template("admin/show_transactions_admin.html", transactions=transactions, total_income=total_income, total_outgoing=total_outgoing, balance=balance)        
+    return render_template("admin/show_graphs_admin.html", transactions=transactions, total_income=total_income, total_outgoing=total_outgoing, balance=balance)        
  
  
 
@@ -105,25 +105,41 @@ def get_data():
  
  
  #---------------------------dirty--friday----------------------------#
+@app.route("/admin/show_transactions_admin")
+def show_transactions_admin():
+    transactions=mongo.db.transactions.find()
+    return render_template("admin/show_transactions_admin.html", transactions=transactions)        
+ #---------------------------dirty-wednesday------------------------------#
+# Admin #
 
-@app.route("/admin/add_transaction_admin", methods=['POST', 'GET'])
+
+ 
+ 
+#--------------------------------------------------------------------#
+@app.route("/admin/add_transaction_admin", methods=['POST','GET'])
 def add_transaction_admin():
-    if request.method == "POST":
-        form_data = request.form.to_dict()
-        form_data['moneyin'] = float(form_data['moneyin'])
-        form_data['moneyout'] = float(form_data['moneyout'])
-        mongo.db.transactions.insert_one(form_data)
-        
-        return redirect('/admin/show_transactions_admin')
-        
     services = mongo.db.services.find()
-    suppliers = mongo.db.suppliers.find()
-    transactions = mongo.db.transactions.find()
-    requests=mongo.db.requests.find()
+    return render_template("admin/add_transaction_admin.html")  
+        
+
+@app.route("/admin/insert_transaction_admin", methods=['POST'])
+def insert_transaction_admin():
+    mongo.db.transactions.insert_one(request.form.to_dict())
+    return redirect(url_for('show_transactions_admin'))
+
+@app.route("/edit_task/<task_id>")
+def edit_task(task_id):
+    the_task = mongo.db.tasks.find_one({"_id": ObjectId(task_id)})
+    categories = mongo.db.categories.find()
+    return render_template("edittask.html", task=the_task, categories=categories)
     
-    return render_template("admin/add_transaction_admin.html", services=services,  transactions=transactions 
-    , suppliers=suppliers, requests=requests)
- #---------------------------
+@app.route("/edit_transaction/<transaction_id>")
+def edit_transaction_admin(transaction_id):
+    the_transaction = mongo.db.transactions.find_one({"_id": ObjectId(task_id)})
+    categories = mongo.db.categories.find()
+    return render_template("admin/edit_appointment_admin.html", task=the_transaction, transactions=ctransactions)    
+    
+ #-----------------------------------------------------#
 
 
 @app.route("/admin/admin_delete_transaction", methods=[ "POST"] )

@@ -21,12 +21,12 @@ $('.m24-styles').css({
     'transform' : 'translate(0px, -'+ wScroll /30 -'%)'
   });
 
-  if(wScroll > $('.clothes-pics').offset().top - ($(window).height() / 1.2)) {
+  if(wScroll > $('.hair-pics').offset().top - ($(window).height() / 1.2)) {
 
-    $('.clothes-pics figure').each(function(i){
+    $('.hair-pics figure').each(function(i){
 
       setTimeout(function(){
-        $('.clothes-pics figure').eq(i).addClass('is-showing');
+        $('.hair-pics figure').eq(i).addClass('is-showing');
       }, 150 * (i+1));
     });
 

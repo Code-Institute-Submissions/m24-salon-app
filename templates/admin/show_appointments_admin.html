@@ -1,0 +1,78 @@
+{% extends 'admin/base_admin.html'%} 
+{% block content %}
+
+<div class="row">
+
+<a href="{{url_for('filter_today_admin')}}">today</a>
+
+    <h4>Appointments <a href="{{url_for('add_request_admin')}}">
+    <i class="material-icons prefix" >add_circle_outline</i></a></h4>
+    <ul class="collapsible" data-collapsible="accordion">
+        {% for request in requests %}
+        
+        <li>
+            <div class="collapsible-header">
+                <div class="col s12">
+                    
+                    <i class="material-icons">expand_more</i>
+                    <a href="#modal1" class="delete_request_btn waves-effect waves-light btn btn_small modal-trigger" data-requestid={{request._id}}>Delete</a>
+                    
+                    <a href="update_request_admin" class="waves-effect waves-light btn btn_small blue">Edit</a>
+                    <a href="tel:{{request.mobile}}"><i class="material-icons prefix" >phone</i></a>
+
+                </div>
+                    {% if request.is_urgent %}
+                        <div class=" request_header col s9 urgent_request">
+                    {% else %}
+                        <div class=" request_header col s9">
+                    {% endif %}
+                    <strong>{{request.request_name}}</strong> - {{request.due_date}} 
+                    {{request.first_name}} {{request.last_name}} 
+                    
+                
+                     
+                </div>
+            </div>
+            <div class="collapsible-body">
+                <span>
+                    {{request.category_name}}
+            </span>
+            </div>
+        </li>
+        {% endfor %}
+
+    </ul>
+    
+    
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal center-align">
+        <div class="modal-content">
+            <h4>Are you sure?</h4>
+        </div>
+    
+        <div class="row modal-footer">
+            <form action="{{ url_for('delete_request_admin') }}" method="POST" class="col s6 center-align">
+                <input id="hidden-request-id" type="hidden" name="request_id">
+                <button class="testing btn waves-effect waves-light margin-left" type="submit" name="action">Yes
+                    <i class="material-icons right">thumb_up</i>
+                </button>
+        
+            </form>
+    
+            <form action="{{ url_for('get_requests_admin') }}" method="GET" class="col s6 center-align">
+                <button class="btn waves-effect waves-light margin-left" type="submit" name="action">No
+                    <i class="material-icons right">thumb_down</i>
+                </button>
+            </form>
+        </div>
+    </div>
+           
+</div>
+{% endblock %}
+
+
+
+
+        
+        
+        
