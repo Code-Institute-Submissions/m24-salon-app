@@ -12,25 +12,19 @@
         
         <li>
             <div class="collapsible-header">
-                <div class="col s12">
-                    
+                <div class="col m12">
                     <i class="material-icons">expand_more</i>
-                    <a href="#modal1" class="delete_request_btn waves-effect waves-light btn btn_small modal-trigger" data-requestid={{request._id}}>Delete</a>
-                    
-                    <a href="update_request_admin" class="waves-effect waves-light btn btn_small blue">Edit</a>
+                    <a href="#modal1" class="delete_request_btn waves-effect waves-light btn btn_small modal-trigger" data-requestid={{request._id}}>Done</a>
+                    <a href="edit_transaction_admin" class="waves-effect waves-light btn btn_small blue">Edit</a>
                     <a href="tel:{{request.mobile}}"><i class="material-icons prefix" >phone</i></a>
-
                 </div>
                     {% if request.is_urgent %}
                         <div class=" request_header col s9 urgent_request">
                     {% else %}
                         <div class=" request_header col s9">
                     {% endif %}
-                    <strong>{{request.request_name}}</strong> - {{request.due_date}} 
-                    {{request.first_name}} {{request.last_name}} 
-                    
-                
-                     
+                    {{request.first_name}} {{request.last_name}}<br/>  
+                    {{request.request_name}}  {{request.due_date}}
                 </div>
             </div>
             <div class="collapsible-body">
@@ -67,7 +61,7 @@
         </div>
     </div>
            
-</div>
+
 {% endblock %}
 
 

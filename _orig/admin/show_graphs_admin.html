@@ -1,0 +1,103 @@
+{% extends 'admin/base_admin.html'%} {% block content %}
+
+    <h3>Financial overview</h3>
+    <a href="javascript:dc.filterAll(); dc.renderAll();"><strong>Reset All</strong></a>
+    
+<p><strong>Total credit € {{ total_income }} | Total debit € {{ total_outgoing }} | balance {{balance}}</div>
+</strong></p>
+    
+    
+    
+    
+    
+    <div id="income-by-month-chart"></div></a>
+    <div id="pie-chart-goes-here"></div>
+    <div id="descr-chart-goes-here"></div></a>
+    
+    <script>
+    queue()
+       .defer(d3.json, "/data")
+       .await(makeGraphs);
+    
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    function makeGraphs(error, transactionsData) {
+        let ndx = crossfilter(transactionsData);
+
+        var parseDate = d3.time.format("%d %B, %Y").parse;
+
+        transactionsData.forEach(function(d) {
+            d.due_date = parseDate(d.due_date)
+            month = d.due_date.getMonth()
+            if(month < 3) {d.period = "1st Quarter";} 
+            else if (month < 6) {d.period = "2nd Quarter";} 
+            else if (month < 9) {d.period = "3rd Quarter";} 
+            else if (month < 12) {d.period = "4rd Quarter";}
+        })
+    
+        // let colors = ["red","blue","orange","green","yellow","green","red","blue"];
+
+        show_income_by_month_chart(ndx);
+        show_quarter_chart(ndx);
+        show_income_by_description_chart(ndx);
+
+        dc.renderAll();
+    }
+    
+    
+    function show_income_by_month_chart(ndx) {
+        due_dateDim = ndx.dimension(function(d) {
+            return monthNames[d.due_date.getMonth()]; 
+        })
+
+        let totalmoneyin = due_dateDim.group().reduceSum(dc.pluck("moneyin"));
+
+        var incomeChart = dc.barChart("#income-by-month-chart");
+        incomeChart
+            .width(700)
+            .height(200)
+            .x(d3.scale.ordinal().domain(monthNames))
+            .xUnits(dc.units.ordinal)            
+            .margins({top:10, right: 50, bottom:30, left:50})
+            .dimension(due_dateDim)
+            .group(totalmoneyin)
+            .xAxisLabel("Month")
+            .yAxisLabel("Income")
+            .yAxis().ticks(4);
+    }
+
+    function show_quarter_chart(ndx) {
+        let periodDim = ndx.dimension(dc.pluck("period"));
+        let totalincomePerperiod = periodDim.group().reduceSum(dc.pluck("moneyin"));
+
+        let periodChart = dc.pieChart("#pie-chart-goes-here");
+        
+        periodChart
+            .height(300)
+            .radius(200)
+            .dimension(periodDim)
+            .group(totalincomePerperiod);
+    }
+    
+    function show_income_by_description_chart(ndx) {
+        let descrDim = ndx.dimension(dc.pluck("descr"));
+        let totalincomePerdescr = descrDim.group().reduceSum(dc.pluck("moneyin"));
+
+        let income_per_description_chart = dc.barChart("#descr-chart-goes-here");
+        income_per_description_chart
+            .width(700)
+            .height(200)
+            .margins({top:10, right: 50, bottom:50, left:50})
+            .dimension(descrDim)
+            .group(totalincomePerdescr)
+            .x(d3.scale.ordinal())
+            .xUnits(dc.units.ordinal)
+            .yAxis().ticks(10);
+
+
+    }
+    </script>
+   
+
+         {% endblock %}

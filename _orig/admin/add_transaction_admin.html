@@ -1,0 +1,96 @@
+{% extends 'admin/base_admin.html'%} {% block content %}
+
+
+<h4>New transaction</h4>
+
+<form action="{{ url_for('insert_transaction_admin')}}" method="POST" class="col s12">
+  <div class="row">
+    <div class="input-field col s12">
+      <i class="material-icons prefix">today</i>
+      <input type="text"  id="due_date" name="due_date" class="datepicker" >
+      <label for="icon_prefix">choose a date of transaction</label>
+    </div>
+  </div>
+  
+<div class="row">
+  <div class="input-field col s12">
+    <i class="material-icons prefix">poll</i>
+    <select id="category" name="category_name">
+          <option value="" disabled selected>Choose which client </option>
+          {% for request in requests %}          
+          <option value="{{request.first_name}}  {{request.last_name }} {{request.mobile }}">{{ request.first_name }} {{ request.last_name }} - {{ request.mobile }}</option>
+          {% endfor %}
+          </select>
+    <label>If applicable the name of client</label>
+  </div>
+  </div>  
+
+<div class="row">
+  <div class="input-field col s12">
+    <i class="material-icons prefix">poll</i>
+    <select id="category" name="category_name">
+          <option value="" disabled selected>Choose hair treatment </option>
+          {% for service in services %}          
+          <option value="{{ service.service_name }}">{{ service.service_name }}</option>
+          {% endfor %}
+          </select>
+    <label>If applicable the name of hair treatment</label>
+  </div>
+  </div>    
+
+ <div class="row">
+      <div class="input-field col s12">
+        <i class="material-icons prefix">poll</i>
+        <select id="supplier" name="supplier_name">
+          <option value="" disabled selected>Choose Supplier</option>
+          {% for supplier in suppliers %}          
+          <option value="{{ supplier.supplier_name}}">{{ supplier.supplier_name}}</option>
+          {% endfor %}
+          </select>
+        <label>If applicable the name of supplier</label>
+      </div>
+    </div>
+
+
+  <div class="row">
+    <div class="input-field col s12">
+      <i class="material-icons prefix ">euro_symbol</i>
+      <input value="0.00" id="moneyin" name="moneyin" type="number" class="validate">
+      <label for="icon_prefix">Credit</label>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="input-field col s12">
+      <i class="material-icons prefix">euro_symbol</i>
+      <input value="0.00" id="moneyout" name="moneyout" type="number" class="validate">
+      <label for="icon_prefix">Debit</label>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="input-field col s12">
+      <i class="material-icons prefix">assignment</i>
+      <input id="descrwrite" name="descrwrite" type="text" class="validate">
+      <label for="icon_prefix">Notes</label>
+    </div>
+  </div>
+  
+
+
+  
+  
+
+<div class=" row ">
+  <button class="btn waves-effect waves-light " type="submit" >Submit
+      <i class="material-icons right ">add_identity</i>
+    </button> 
+  </div>  
+    
+  
+    </form>
+
+
+    
+    {% endblock content %}
+

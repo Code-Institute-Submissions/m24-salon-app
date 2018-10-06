@@ -2,25 +2,35 @@
 <html>
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" type="text/css" />
-    <link rel="stylesheet" href="static/extracss/style.css">
+    <link rel="stylesheet" href="static/scss/style.css">
     <link rel="icon" type="static/image/png" href="static/images/favicon.png">
     <link rel="stylesheet" href="static/js/materialize.js" type="text/css" />
     <link rel="stylesheet" href="static/js/materialize.min.js" type="text/css" />
 </head>
 
+
+<style>
+    .adress{
+       text-align:center; 
+       line-height: -10%;
+        
+    }
+</style>
+<title>M24 Hair Styles</title>
 <body>
     <header>
         <nav>
-            <div class="nav-wrapper">
-                <a href="{{url_for('get_index')}}" class="brand-logo">&nbsp;&nbsp; MEEREWIJCK 24 - LEIMUIDEN - 0651297749</a>
+            <div class="nav-wrapper adress">
+                 MEEREWIJCK 24 - LEIMUIDEN - 0651297749
                 
                 <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><a href="{{url_for('get_index')}}">Home</a></li>
+                    
                 </ul>
             </div>
         </nav>

@@ -31,7 +31,7 @@ def insert_request_user():
     mongo.db.requests.insert_one(request.form.to_dict())
     return redirect(url_for('get_index'))
 
-# Admin
+
 @app.route("/admin/")
 def get_requests_admin():
     requests=mongo.db.requests.find()
@@ -50,9 +50,9 @@ def insert_request_admin():
 
 @app.route("/admin/edit_request_admin")
 def edit_request_admin():
-    request_id = request.args['request_id']
-    req = mongo.db.requests.find_one({"_id": ObjectId(request_id)})
-    return render_template('admin/edit_appointment_admin.html', request=req)
+    
+    
+    return render_template('admin/edit_appointment_admin.html')
   
   
 @app.route("/admin/update_request_admin/<request_id>", methods=['POST'])
@@ -77,16 +77,12 @@ def filter_today_admin():
   
 @app.route("/admin/show_graphs_admin")
 def show_graphs_admin():
-
     total_income = 0.0
     total_outgoing = 0.0
     transactions = mongo.db.transactions.find()
-    
     for transaction in transactions:
         total_income += transaction['moneyin']
         total_outgoing += transaction['moneyout']
-    
-
     balance = total_income - total_outgoing
     return render_template("admin/show_graphs_admin.html", transactions=transactions, total_income=total_income, total_outgoing=total_outgoing, balance=balance)        
  
@@ -100,26 +96,33 @@ def get_data():
         list_transactions.append(t)
     return json.dumps(list_transactions)
         
+ #-----------------------------------------------------------------#
  
  
- 
- 
- #---------------------------dirty--friday----------------------------#
 @app.route("/admin/show_transactions_admin")
 def show_transactions_admin():
     transactions=mongo.db.transactions.find()
-    return render_template("admin/show_transactions_admin.html", transactions=transactions)        
- #---------------------------dirty-wednesday------------------------------#
-# Admin #
+    services=mongo.db.services.find()
+    requests=mongo.db.requests.find()
+    suppliers=mongo.db.suppliers.find()
+    return render_template("admin/show_transactions_admin.html", transactions=transactions, services=services, suppliers=suppliers, requests=requests)        
+ #---------------------------Friday------------------------------#
 
+@app.route('/edit_transaction_admin/<transaction_admin_id>')
+def edit_transaction_admin(task_id):
+    the_transaction_admin = mongo.db.transactions.find_one({'_id': ObjectId(task_id)})
+    all_transactions = mongo.db.transactions.find()
+    return render_template(
+        'edit_transaction_admin.html', transaction_admin=the_transaction_admin, transactions=all_transactions)
 
- 
  
 #--------------------------------------------------------------------#
 @app.route("/admin/add_transaction_admin", methods=['POST','GET'])
 def add_transaction_admin():
     services = mongo.db.services.find()
-    return render_template("admin/add_transaction_admin.html")  
+    suppliers = mongo.db.suppliers.find()
+    requests = mongo.db.requests.find()
+    return render_template("admin/add_transaction_admin.html", services=services, suppliers=suppliers, requests=requests)  
         
 
 @app.route("/admin/insert_transaction_admin", methods=['POST'])
@@ -127,18 +130,12 @@ def insert_transaction_admin():
     mongo.db.transactions.insert_one(request.form.to_dict())
     return redirect(url_for('show_transactions_admin'))
 
-@app.route("/edit_task/<task_id>")
-def edit_task(task_id):
-    the_task = mongo.db.tasks.find_one({"_id": ObjectId(task_id)})
-    categories = mongo.db.categories.find()
-    return render_template("edittask.html", task=the_task, categories=categories)
+
     
-@app.route("/edit_transaction/<transaction_id>")
-def edit_transaction_admin(transaction_id):
-    the_transaction = mongo.db.transactions.find_one({"_id": ObjectId(task_id)})
-    categories = mongo.db.categories.find()
-    return render_template("admin/edit_appointment_admin.html", task=the_transaction, transactions=ctransactions)    
-    
+
+
+  
+   
  #-----------------------------------------------------#
 
 
@@ -160,4 +157,8 @@ if __name__ == "__main__":
             debug=True)
 
 
+#---------------test code-------------------#
 
+
+
+#------------------------------------------------#

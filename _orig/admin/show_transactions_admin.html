@@ -1,0 +1,54 @@
+{% extends 'admin/base_admin.html'%} {% block content %}
+
+<div class="row">
+
+    <!--<a href="{{url_for('filter_today_admin')}}">today</a>-->
+    
+
+
+    <h3>all transactions<a href="{{url_for('add_transaction_admin')}}">
+    <i class="material-icons prefix" >add_circle_outline</i></a></h3>
+    <div class="col s12">
+        
+    </row>
+        <ul class="collapsible" data-collapsible="accordion">
+            {% for transaction in transactions %}
+
+            <li>
+                <div class="collapsible-header">
+                    <div class="col s3">
+
+                        <i class="material-icons">expand_more</i>
+                        <a href="#modal1" class="delete_request_btn waves-effect waves-light btn btn_small modal-trigger" data-requestid={{request._id}}>Done</a>
+                        <a href="{{url_for('edit_transaction_admin')}}" class="waves-effect waves-light btn btn_small blue">Edit</a>
+                        
+                        
+                    </div>
+                    <a href="tel:{{transaction.mobile}}"><i class="material-icons prefix" >phone</i></a> {% if request.is_urgent %}
+                    <div class=" request_header col s9 urgent_request">
+                        {% else %}
+                        <div class=" request_header col s9">
+                            {% endif %}
+                            <strong>{{transaction.client}}</strong> {{transaction.due_date}} {{transaction.decscwrite}}
+                            <div class="moneyout">-{{transaction.moneyout}}&nbsp
+                                <div class="moneyin">+ {{transaction.moneyin}} </div>
+
+
+                            </div>
+                        </div>
+                        <div class="collapsible-body">
+                            <span>
+                    {{transaction.misc}}
+            </span>
+                        </div>
+            </li>
+            {% endfor %}
+
+        </ul>
+
+
+        <!-- Modal Structure -->
+
+
+        </div>
+        <hr> {% endblock %}

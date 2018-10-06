@@ -1,0 +1,15 @@
+{% extends 'base.html' %} {% block content %}
+
+<h2>customer list</h2>
+
+{% for address in addresses %}
+<div class="address">
+    <img src="static/images/portraits/portrait.jpeg" />
+    <div class="txt_container">
+        <p>{{address.first_name}}</p>
+        <p>{{address.last_name}}</p>
+        <p>{{address.mobile}}</p>
+        <p><a href="mailto:{{address.email}}"><i class="fas fa-phone-square"></a></i>
+    </div>
+</div>
+{% endfor %} {% endblock content %}
