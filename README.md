@@ -3,3 +3,4 @@ small salons it includes registration, bookings, expenditure, real time financia
 graphic overview.
 the rest will come later
 
+# m24-diggit
