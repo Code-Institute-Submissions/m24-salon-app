@@ -11,10 +11,10 @@ h1, h2, h3, h4, h5, h6{
 
 .btn_small {
     height: 24px;
-    width: 60px;
+    width: 70px;
     line-height: 24px;
     margin: 5px 5px;
-    padding: 0 0.5em
+    padding: 0 0.5em;
 }
 
 .task_header {
@@ -66,5 +66,47 @@ h1, h2, h3, h4, h5, h6{
 background-color:#6dbdc6;
                     
 }
+
+.moneyin{
+   position:relative;
+   top:30px;
+   width:70px;
+   height:30px;
+   border-top:thin solid;
+   border-bottom:3px solid;
+
+}
+
+
+.moneyout{ 
+    width:40px;
+    height:30px;
+    float: right;
+    border-top:thin solid;
+    border-bottom:3px solid;
+
+ 
+}
+
+.specialbox{
+    position:relative;
+    top:0px;
+    padding-top:3px;
+    height:50px;
+    width:130px;
+}
+
+.box-space{
+    position: relative;
+    top:-50px;
+    max-width:50%;
+    margin-left:40px;
+    
+
+   
+}
+
+
+
 
 

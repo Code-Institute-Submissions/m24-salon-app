@@ -48,31 +48,31 @@ def insert_request_admin():
     return redirect(url_for('get_requests_admin'))
 
 
-@app.route("/admin/edit_request_admin")
+ 
+@app.route("/admin/edit_request_admin", methods=['POST','GET'])
 def edit_request_admin():
+    request_id = request.args['request_id']
+    req = mongo.db.requests.find_one({"_id": ObjectId(request_id)})
+    return render_template('admin/edit_request_admin.html', request=req) 
     
     
-    return render_template('admin/edit_appointment_admin.html')
-  
-  
 @app.route("/admin/update_request_admin/<request_id>", methods=['POST'])
 def update_request_admin(request_id):
     requests = mongo.db.requests
     requests.update({"_id": ObjectId(request_id)}, request.form.to_dict())
-    return redirect(url_for("get_requests_admin")) 
-  
-  
+    return redirect(url_for("get_requests_admin"))   
+    
 @app.route("/admin/delete_request/", methods=["POST"])
 def delete_request_admin():
     request_id = request.form['request_id']
     mongo.db.requests.remove({"_id": ObjectId(request_id)})
-    return redirect(url_for("get_requests_admin"))
-  
+    return redirect(url_for("get_requests_admin"))   
+
 @app.route("/admin/filter_today")
 def filter_today_admin():
     todays_date = datetime.datetime.today().strftime('%-d %B, %Y')
     filtered_requests = mongo.db.requests.find({"due_date": todays_date})
-    return render_template("admin/appointments_admin.html", requests=filtered_requests)
+    return render_template("admin/show_appointments_admin.html", requests=filtered_requests)
     
   
 @app.route("/admin/show_graphs_admin")
