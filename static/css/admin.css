@@ -1,8 +1,4 @@
-/*body {*/
 
-/*    background-color: red;*/
-
-/*}*/
 
 h1, h2, h3, h4, h5, h6{
    color: #387a70;
@@ -19,11 +15,11 @@ h1, h2, h3, h4, h5, h6{
 
 .task_header {
     margin-top: 5px;
-    background-color: #42f4d9;
+    
 }
 
 
-.urgent_task {
+.urgent_request {
     color: red;
 }
 

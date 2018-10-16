@@ -141,6 +141,99 @@ def delete_admin_transaction_admin():
 def get_graphs_admin():
     graphs=mongo.db.transactions.find()
     return render_template("admin/show_graphs_admin.html" )
+    
+    
+    
+    
+    
+#---------------services------------------#
+
+@app.route('/admin/get_services')
+def get_services():
+    return render_template('admin/services.html',
+    services=mongo.db.services.find())
+    
+
+@app.route('/admin/new_service')
+def new_service():
+    return render_template('admin/addservice.html')
+
+
+@app.route('/admin/insert_service', methods=['POST'])
+def insert_service():
+    services = mongo.db.services
+    services.insert_one(request.form.to_dict())
+    return redirect(url_for('get_services'))
+    
+
+@app.route('/admin/edit_service/<service_id>')
+def edit_service(service_id):
+    return render_template('admin/editservice.html',
+    service=mongo.db.services.find_one({'_id': ObjectId(service_id)}))
+
+@app.route('/admin/update_service/<service_id>', methods=['POST'])
+def update_service(service_id):
+    mongo.db.services.update(
+        {'_id': ObjectId(service_id)},
+        {'service_name': request.form['service_name']})
+    return redirect(url_for('get_services'))
+  
+@app.route('/admin/confirm_delete/<service_id>') 
+def confirm_delete(service_id):
+    service = mongo.db.services.find_one({'_id': ObjectId(service_id)})
+    return render_template('admin/confirm_delete.html', service=service)
+
+
+@app.route('/admin/delete_service/<service_id>') 
+def delete_service(service_id):
+    mongo.db.services.remove({'_id': ObjectId(service_id)})
+    return redirect(url_for("get_services"))
+ 
+ #---------------suppliers------------------#
+
+@app.route('/admin/get_suppliers')
+def get_suppliers():
+    return render_template('/admin/suppliers.html',
+    suppliers=mongo.db.suppliers.find())
+    
+
+@app.route('/admin/new_supplier')
+def new_supplier():
+    return render_template('admin/addsupplier.html')
+
+
+@app.route('/admin/insert_supplier', methods=['POST'])
+def insert_supplier():
+    suppliers = mongo.db.suppliers
+    suppliers.insert_one(request.form.to_dict())
+    return redirect(url_for('get_suppliers'))
+    
+
+@app.route('/admin/edit_supplier/<supplier_id>')
+def edit_supplier(supplier_id):
+    return render_template('admin/editsupplier.html',
+    supplier=mongo.db.suppliers.find_one({'_id': ObjectId(supplier_id)}))
+
+@app.route('/admin/update_supplier/<supplier_id>', methods=['POST'])
+def update_supplier(supplier_id):
+    mongo.db.suppliers.update(
+        {'_id': ObjectId(supplier_id)},
+        {'supplier_name': request.form['supplier_name']})
+    return redirect(url_for('get_suppliers'))
+  
+@app.route('/admin/confirm_delete/<supplier_id>') 
+def confirm_delete_sup(supplier_id):
+    supplier = mongo.db.suppliers.find_one({'_id': ObjectId(supplier_id)})
+    return render_template('admin/confirm_delete_sup.html', supplier=supplier)
+
+
+@app.route('/admin/delete_supplier/<supplier_sup_id>') 
+def delete_supplier_sup(supplier_sup_id):
+    mongo.db.suppliers.remove({'_id': ObjectId(supplier_id)})
+    return redirect(url_for("get_suppliers"))
+ 
+ #-----------------------------------------------------------------------------   
+   
 
 
 if __name__ == "__main__":
@@ -149,8 +242,4 @@ if __name__ == "__main__":
             debug=True)
 
 
-#---------------test code-------------------#
 
-
-
-#------------------------------------------------#

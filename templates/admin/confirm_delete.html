@@ -1,0 +1,10 @@
+{% extends 'admin/base_admin.html'%} {% block content %}
+
+<h3>Sure you want to delete service:</h3>
+<div class="row">
+    <h4> <br> {{service.service_name}} </h4>
+    <a href="{{url_for('get_services')}} " class="waves-effect waves-light btn">No</a>
+    <a href="{{url_for('delete_service', service_id=service._id)}}" class="waves-effect waves-light btn no_btn">DELETE</a>
+</div>
+       
+{% endblock %}

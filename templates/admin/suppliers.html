@@ -1,0 +1,27 @@
+{% extends 'admin/base_admin.html'%} {% block content %}
+
+<div class="row">
+
+    <h3>suppliers</h3>
+
+    <ul class="collapsible" data-collapsible="accordion">
+        {% for supplier in suppliers %}
+        <li>
+            <div class="collapsible-header">
+                <a href="{{url_for('confirm_delete_sup', supplier_id =supplier._id)}}" class="waves-effect waves-light btn btn_small">Del</a>
+                <a href="{{url_for('edit_supplier', supplier_id =supplier._id)}}" class="waves-effect waves-light btn btn_small">Edit</a>
+                <div class=" task_header">
+                    <strong>{{supplier.supplier_name}}</strong>
+                </div>
+            </div>
+
+         {% endfor %}
+    </ul>
+</div>
+<div class="row">
+    <a href="{{ url_for('new_supplier') }}" class="waves-effect waves-light btn">
+        <i class="material-icons right">playlist_add</i>Add supplier
+    </a>
+</div>
+
+{% endblock %}
