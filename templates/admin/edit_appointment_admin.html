@@ -1,7 +1,11 @@
 {% extends "base.html" %} {% block content %}
  <h3>Edit request</h3>
  <div class="row">
-  <form action="{{ url_for('update_request', request_id=requests._id) }}" method="POST" class="col s12">
+  <h3>Edit appointment</h3>
+
+<div class="row">
+  <form action="{{ url_for('update_request', request_id=request._id) }}" method="POST" class="col s12">
+
      <div class="row">
       <div class="input-field col s12">
         <i class="material-icons prefix">poll</i>

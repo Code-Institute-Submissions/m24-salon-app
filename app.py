@@ -47,26 +47,23 @@ def insert_request_admin():
     mongo.db.requests.insert_one(request.form.to_dict())
     return redirect(url_for('get_requests_admin'))
 
+#-------------New---------------
 
- 
-@app.route("/admin/edit_request_admin", methods=['POST','GET'])
-def edit_request_admin():
-    request_id = request.args['request_id']
-    req = mongo.db.requests.find_one({"_id": ObjectId(request_id)})
-    return render_template('admin/edit_request_admin.html', request=req) 
+
+ #-------------------------------   
     
     
 @app.route("/admin/update_request_admin/<request_id>", methods=['POST'])
 def update_request_admin(request_id):
     requests = mongo.db.requests
     requests.update({"_id": ObjectId(request_id)}, request.form.to_dict())
-    return redirect(url_for("get_requests_admin"))   
+    return redirect(url_for("get_request_admin"))   
     
 @app.route("/admin/delete_request/", methods=["POST"])
 def delete_request_admin():
     request_id = request.form['request_id']
     mongo.db.requests.remove({"_id": ObjectId(request_id)})
-    return redirect(url_for("get_requests_admin"))   
+    return redirect(url_for("get_request_admin"))   
 
 @app.route("/admin/filter_today")
 def filter_today_admin():
@@ -108,12 +105,13 @@ def show_transactions_admin():
     return render_template("admin/show_transactions_admin.html", transactions=transactions, services=services, suppliers=suppliers, requests=requests)        
  #---------------------------Friday------------------------------#
 
-@app.route('/edit_transaction_admin/<transaction_admin_id>')
-def edit_transaction_admin(task_id):
-    the_transaction_admin = mongo.db.transactions.find_one({'_id': ObjectId(task_id)})
-    all_transactions = mongo.db.transactions.find()
-    return render_template(
-        'edit_transaction_admin.html', transaction_admin=the_transaction_admin, transactions=all_transactions)
+
+        
+@app.route("/update_transaction_admin/<transaction_admin_id>", methods=['POST'])
+def update_transaction_admin(transaction_admin_id):
+    transactions = mongo.db.transactions
+    transactions.update({"_id": ObjectId(transaction_admin_id)}, request.form.to_dict())
+    return redirect(url_for("get_transaction"))        
 
  
 #--------------------------------------------------------------------#
@@ -130,12 +128,6 @@ def insert_transaction_admin():
     mongo.db.transactions.insert_one(request.form.to_dict())
     return redirect(url_for('show_transactions_admin'))
 
-
-    
-
-
-  
-   
  #-----------------------------------------------------#
 
 

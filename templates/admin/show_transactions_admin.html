@@ -1,8 +1,8 @@
 {% extends 'admin/base_admin.html'%} {% block content %}
 
 <div class="row">
-    <h3>Transactions<a href="{{url_for('add_transaction_admin')}}">
-    <i class="material-icons prefix" >add_circle_outline</i></a></h3>
+    <h4>Transactions<a href="{{url_for('add_transaction_admin')}}">
+    <i class="material-icons prefix" >add_circle_outline</i></a></h4>
     <div class="col s12">
     </row>
         <ul class="collapsible" data-collapsible="accordion">
@@ -12,10 +12,8 @@
                 <div class="collapsible-header">
                     <div class="col s12">
                         <i class="material-icons specialbox">expand_more</i>
-                       
                             <div class="box-space">
                             <a href="#modal1" class="delete_request_btn waves-effect waves-light btn btn_small modal-trigger" data-requestid={{request._id}}>Delete</a>
-                            <a href="{{url_for('edit_request_admin', request_id=request._id)}}" class="waves-effect waves-light btn btn_small blue">Edit</a>
                             <a href="tel:{{transaction.mobile}}" class="waves-effect waves-light btn btn_small" id="phone">Tel.</i></a>
                         </div></div>
                     
@@ -27,7 +25,7 @@
                     <div class=" request_header col s9">
                             {% endif %}
                      
-                            <strong>{{suppliers.supplier_name}} {{transaction.client}}</strong> - {{transaction.due_date}}<br> {{transaction.decscwrite}}
+                            <strong>{{transaction.client}}</strong> - {{transaction.due_date}}<br> {{transaction.decscwrite}}
                             <div class="moneyin">+ {{transaction.moneyin}}</div>
                             <div class="moneyout">- {{transaction.moneyout}}</div> 
                     </div>
