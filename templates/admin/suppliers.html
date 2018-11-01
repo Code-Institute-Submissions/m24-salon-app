@@ -2,7 +2,8 @@
 
 <div class="row">
 
-    <h3>suppliers</h3>
+    <h4>Suppliers<a href="{{url_for('new_supplier')}}">
+    <i class="material-icons prefix" >add_circle_outline</i></a></h4>
 
     <ul class="collapsible" data-collapsible="accordion">
         {% for supplier in suppliers %}
@@ -18,10 +19,6 @@
          {% endfor %}
     </ul>
 </div>
-<div class="row">
-    <a href="{{ url_for('new_supplier') }}" class="waves-effect waves-light btn">
-        <i class="material-icons right">playlist_add</i>Add supplier
-    </a>
-</div>
+
 
 {% endblock %}

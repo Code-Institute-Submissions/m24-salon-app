@@ -227,7 +227,7 @@ def confirm_delete_sup(supplier_id):
     return render_template('admin/confirm_delete_sup.html', supplier=supplier)
 
 
-@app.route('/admin/delete_supplier/<supplier_sup_id>') 
+@app.route('/admin/delete_supplier/<supplier_id>') 
 def delete_supplier_sup(supplier_sup_id):
     mongo.db.suppliers.remove({'_id': ObjectId(supplier_id)})
     return redirect(url_for("get_suppliers"))

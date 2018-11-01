@@ -110,4 +110,30 @@ background-color:#6dbdc6;
 
 
 
+   #income-by-month-chart{
+       width:500px;
+       padding:0px;
+       margin-left: 30px;
+       
+   } 
+   
+   #pie-chart{
+    
+       padding:5px; 
+       width:500px;
+       margin: 0, auto;
+       
+       
+   }
+   
+    #trending{
+        display:none;
+        background-color:lavender;
+       padding:20px;
+       
+       
+   }
+
+
+
 

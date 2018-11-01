@@ -1,34 +1,11 @@
 {% extends 'admin/base_admin.html'%} {% block content %}
-<style>
-   #income-by-month-chart{
-       width:500px;
-       padding:0px;
-       margin-left: 30px;
-       
-   } 
-   
-   #pie-chart{
-    
-       padding:5px; 
-       width:500px;
-       margin: 0, auto;
-       
-   }
-   
-    #trending{
-        display:none;
-            background-color:lavender;
-       padding:20px;
-       
-       
-   }
-    
-</style>
+
     <h3>Financial overview</h3>
     <a href="javascript:dc.filterAll(); dc.renderAll();"><strong>Reset All</strong></a>
     
 <p><strong>Total credit € {{ total_income }} | Total debit € {{ total_outgoing }} | balance {{balance}}</div>
 </strong></p>
+     
 
     <div class="col s3 offset-s3" id="income-by-month-chart"></div>
     <div class="col s3 " id="pie-chart"></div>
@@ -85,6 +62,7 @@
             .xAxisLabel("")
             .yAxisLabel("")
             .yAxis().ticks(4);
+            
     }
 
     function show_quarter_chart(ndx) {
@@ -115,6 +93,10 @@
             .yAxis().ticks(10);
 
     }
+    
+    
+
+   
     </script>
    
          {% endblock %}
