@@ -5,36 +5,29 @@
 
 <a href="{{url_for('filter_today_admin')}}">today</a>
 
-    <h4>Appointments1 <a href="{{url_for('add_request_admin')}}">
+    <h4>Appointments <a href="{{url_for('add_request')}}">
     <i class="material-icons prefix" >add_circle_outline</i></a></h4>
     <ul class="collapsible" data-collapsible="accordion">
         {% for request in requests %}
         
         <li>
-                       
-                        <div class="collapsible-header">
+            <div class="collapsible-header">
                 <div class="col s12">
-                    <i class="material-icons specialbox">expand_more</i>
-                    <div class="box-space">
-                    <a href="#modal1" class="delete_request_btn waves-effect waves-light btn btn_small modal-trigger" data-requestid={{request._id}}>Delete</a>
-                    <a href="edit_request" class="waves-effect waves-light btn btn_small blue">Edit</a>
-                    <a href="tel:{{request.mobile}}" class="waves-effect waves-light btn btn_small" id="phone">Tel.</i></a>
                     
-</a>
-                </div></div>
+                    <i class="material-icons">expand_more</i>
+                    <a href="#modal1" class="delete_request_btn waves-effect waves-light btn btn_small modal-trigger" data-requestid={{request._id}}>Delete</a>
+                    
+                    <a href="{{url_for('edit_request', request_id =request._id)}}" class="waves-effect waves-light btn btn_small blue">Edit</a>
+                    <a href="tel:{{request.mobile}}"><i class="material-icons prefix" >phone</i></a>
 
-                
+                </div>
                     {% if request.is_urgent %}
                         <div class=" request_header col s9 urgent_request">
                     {% else %}
                         <div class=" request_header col s9">
                     {% endif %}
-                    <a href="https://api.whatsapp.com/send?phone={{ mobile }}&text=Hi {{ first_name }}, Thanks for contacting us we can fit you in at 7:00 pm or 8:00 pm. Please let us know which time would be most convieniant. We will then confirm the time of your appointment...or just call us back on this number: +31651297749 Greetings M24 Hair styles."  target="_blank">
-                    <i class="fa fa-whatsapp "></i>
-                     <div class="bookinginf"><strong>{{request.first_name}} {{request.last_name}} </strong>
-                     {{request.due_date}} <br/>{{request.email}}<br/>{{request.mobile}} 
-                     </div>
-                   
+                    <strong>{{request.request_name}}</strong> - {{request.due_date}} 
+                    {{request.first_name}} {{request.last_name}} 
                     
                 
                      
@@ -51,7 +44,7 @@
     </ul>
     
     
-   
+    <!-- Modal Structure -->
     <div id="modal1" class="modal center-align">
         <div class="modal-content">
             <h4>Are you sure?</h4>

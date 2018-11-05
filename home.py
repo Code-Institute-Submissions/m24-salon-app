@@ -19,59 +19,18 @@ mongo = PyMongo(app)
 def get_index():
     return render_template('index.html') 
     
-  
-@app.route("/add_request_user")
-def add_request_user():
-    services = mongo.db.services.find()
-    return render_template('add_request_user.html', services=services)
-
-
-@app.route("/insert_request_user", methods=['POST'])
-def insert_request_user():
-    mongo.db.requests.insert_one(request.form.to_dict())
-    return redirect(url_for('get_index'))
-
-
 @app.route("/admin/")
 def get_requests_admin():
     requests=mongo.db.requests.find()
     return render_template("admin/show_appointments_admin.html", requests=requests)
-
-
-
-
-#-------------New---------------
-
-
- #-------------------------------   
-    
-    
-
-@app.route("/admin/delete_request/", methods=["POST"])
-def delete_request_admin():
-    request_id = request.form['request_id']
-    mongo.db.requests.remove({"_id": ObjectId(request_id)})
-    return redirect(url_for("get_request_admin"))   
+  
 
 @app.route("/admin/filter_today")
-def filter_today_admin():
+def filter_today():
     todays_date = datetime.datetime.today().strftime('%-d %B, %Y')
     filtered_requests = mongo.db.requests.find({"due_date": todays_date})
-    return render_template("admin/show_appointments_admin.html", requests=filtered_requests)
- 
- 
-# @app.route('/admin/edit_request/<request_id>')
-# def edit_request(request_id):
-#     return render_template('admin/a_edit_request.html',
-#     request=mongo.db.request.find_one({'_id': ObjectId(request_id)}))
- 
- 
- 
- 
- 
- 
+    return render_template("admin/a_requests.html", requests=filtered_requests)
     
-  
 @app.route("/admin/show_graphs_admin")
 def show_graphs_admin():
     total_income = 0.0
@@ -83,8 +42,6 @@ def show_graphs_admin():
     balance = total_income - total_outgoing
     return render_template("admin/show_graphs_admin.html", transactions=transactions, total_income=total_income, total_outgoing=total_outgoing, balance=balance)        
  
- 
-
 @app.route("/data")
 def get_data():
     transactions = mongo.db.transactions.find({}, {'_id': False})
@@ -92,6 +49,10 @@ def get_data():
     for t in transactions:
         list_transactions.append(t)
     return json.dumps(list_transactions)
+    
+    
+    
+    
         
  #-----------------------------------------------------------------#
  
@@ -103,10 +64,10 @@ def show_transactions_admin():
     requests=mongo.db.requests.find()
     suppliers=mongo.db.suppliers.find()
     return render_template("admin/show_transactions_admin.html", transactions=transactions, services=services, suppliers=suppliers, requests=requests)        
+ 
  #---------------------------Friday------------------------------#
 
 
-        
 @app.route("/update_transaction_admin/<transaction_admin_id>", methods=['POST'])
 def update_transaction_admin(transaction_admin_id):
     transactions = mongo.db.transactions
@@ -115,6 +76,7 @@ def update_transaction_admin(transaction_admin_id):
 
  
 #--------------------------------------------------------------------#
+
 @app.route("/admin/add_transaction_admin", methods=['POST','GET'])
 def add_transaction_admin():
     services = mongo.db.services.find()
@@ -195,19 +157,16 @@ def delete_service(service_id):
 def get_suppliers():
     return render_template('/admin/suppliers.html',
     suppliers=mongo.db.suppliers.find())
-    
 
 @app.route('/admin/new_supplier')
 def new_supplier():
     return render_template('admin/addsupplier.html')
-
 
 @app.route('/admin/insert_supplier', methods=['POST'])
 def insert_supplier():
     suppliers = mongo.db.suppliers
     suppliers.insert_one(request.form.to_dict())
     return redirect(url_for('get_suppliers'))
-    
 
 @app.route('/admin/edit_supplier/<supplier_id>')
 def edit_supplier(supplier_id):
@@ -226,58 +185,69 @@ def confirm_delete_sup(supplier_id):
     supplier = mongo.db.suppliers.find_one({'_id': ObjectId(supplier_id)})
     return render_template('admin/confirm_delete_sup.html', supplier=supplier)
 
-
 @app.route('/admin/delete_supplier/<supplier_id>') 
 def delete_supplier_sup(supplier_sup_id):
     mongo.db.suppliers.remove({'_id': ObjectId(supplier_id)})
     return redirect(url_for("get_suppliers"))
  
- #-----------------------------------------------------------------------------   
-   
-@app.route('/admin/edit_request/<request_id>', methods=['GET','POST'])
+ #-----------------------------fun day------------------------------------   
+ 
+ 
+@app.route("/add_request_user")
+def add_request_user():
+    services = mongo.db.services.find()
+    return render_template('add_request_user.html', services=services)
+    
+@app.route('/admin/new_request')
+def new_request():
+    return render_template('admin/a_add_request.html')
+
+@app.route('/admin/insert_request', methods=['POST'])
+def insert_request():
+    requests = mongo.db.requests
+    requests.insert_one(request.form.to_dict())
+    return redirect(url_for('get_requests'))
+
+@app.route('/admin/edit_request/<request_id>')
 def edit_request(request_id):
-    return render_template('admin/editappointment.html',
+    return render_template('admin/a_edit_request.html',
     request=mongo.db.requests.find_one({'_id': ObjectId(request_id)}))
 
-@app.route("/admin/update_request/<request_id>", methods=['POST'])
+@app.route('/admin/update_request/<request_id>', methods=['POST'])
 def update_request(request_id):
+    mongo.db.requests.update(
+        {'_id': ObjectId(request_id)},
+        {'request_name': request.form['request_name']})
+    return redirect(url_for('get_requests'))
     
-    requests.update({"_id": ObjectId(request_id)}, request.form.to_dict())
-    services = mongo.db.services.find()
-    requests = mongo.db.requests.find()
-    return redirect(url_for("get_requests", services=services, requests=requests)) 
+@app.route('/admin/confirm_delete/<request_id>') 
+def confirm_delete_request(request_id):
+    request = mongo.db.requests.find_one({'_id': ObjectId(request_id)})
+    return render_template('admin/a_confirm_delete_request.html', request=request)
+    
+@app.route('/admin/delete_request/<request_id>') 
+def delete_request(request_id):
+    mongo.db.requests.remove({'_id': ObjectId(request_id)})
+    return redirect(url_for("get_requests"))
     
 
-
-
-
-
-
-
-
-
-
-
-
-
-    
-@app.route("/admin/insert_request_admin", methods=['POST'])
-def insert_request_admin():
-    mongo.db.requests.insert_one(request.form.to_dict())
-    return redirect(url_for('get_requests_admin'))
+ #-------------------------temporary code example---------------------------------------------- 
 
 @app.route("/admin/add_request")
-def add_request():
+def add_request_user():
     services = mongo.db.services.find()
-    return render_template('admin/add_appointment_admin.html', services=services)
-    
-    
+    return render_template('admin/a_add_request_user.html', services=services)
+
+@app.route("/insert_request_user", methods=['POST'])
+def insert_request_user():
+    mongo.db.requests.insert_one(request.form.to_dict())
+    return redirect(url_for('get_index'))
 
 
 
 
-  
 
+#-----------------------------------------------------------------------------
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
