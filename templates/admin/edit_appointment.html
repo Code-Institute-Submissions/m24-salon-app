@@ -2,7 +2,7 @@
 <div class="row">
 <h3>Edit Appointments</h3>
 
-    <form action="{{ url_for('update_request', request_id=request._id) }}" method="POST" class="col s12">
+    <form action="{{ url_for('update_request_admin', request_id=request._id) }}" method="POST" class="col s12">
     <div class="row">
       <div class="input-field col s12">
         <i class="material-icons prefix">today</i>
@@ -15,9 +15,9 @@
       <div class="input-field col s12">
         <i class="material-icons prefix">poll</i>
         <select id="category" name="category_name">
-          <option value="" disabled selected>Choose hair treatment </option>
+          <option value="{{request.category_name}}" disabled selected>{{request.category_name}}</option>
           {% for service in services %}          
-          <option value="{{service.service_name}}">{{ service.service_name }}</option>
+          <option value="{{request.category_name}}">{{ request.category_name }}</option>
           {% endfor %}
           </select>
         <label>Hair treatment</label>

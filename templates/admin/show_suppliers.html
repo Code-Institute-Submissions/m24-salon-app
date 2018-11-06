@@ -9,7 +9,7 @@
         {% for supplier in suppliers %}
         <li>
             <div class="collapsible-header">
-                <a href="{{url_for('confirm_delete_sup', supplier_id =supplier._id)}}" class="waves-effect waves-light btn btn_small">Del</a>
+                <a href="{{url_for('confirm_delete_supplier', supplier_id =supplier._id)}}" class="waves-effect waves-light btn btn_small">Del</a>
                 <a href="{{url_for('edit_supplier', supplier_id =supplier._id)}}" class="waves-effect waves-light btn btn_small">Edit</a>
                 <div class=" task_header">
                     <strong>{{supplier.supplier_name}}</strong>

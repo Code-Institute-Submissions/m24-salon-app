@@ -15,7 +15,7 @@
                 <div class="col s12">
                     
                     <i class="material-icons">expand_more</i>
-                    <a href="#modal1" class="delete_request_btn waves-effect waves-light btn btn_small modal-trigger" data-requestid={{request._id}}>Delete</a>
+                    <a href="{{url_for('confirm_delete_appointment', request_id =request._id)}}" class="waves-effect waves-light btn btn_small">Del</a>
                     
                     <a href="{{url_for('edit_request', request_id =request._id)}}" class="waves-effect waves-light btn btn_small blue">Edit</a>
                     <a href="tel:{{request.mobile}}"><i class="material-icons prefix" >phone</i></a>
@@ -43,31 +43,9 @@
 
     </ul>
     
-    
-    <!-- Modal Structure -->
-    <div id="modal1" class="modal center-align">
-        <div class="modal-content">
-            <h4>Are you sure?</h4>
-        </div>
-    
-        <div class="row modal-footer">
-            <form action="{{ url_for('delete_request_admin') }}" method="POST" class="col s6 center-align">
-                <input id="hidden-request-id" type="hidden" name="request_id">
-                <button class="testing btn waves-effect waves-light margin-left" type="submit" name="action">Yes
-                    <i class="material-icons right">thumb_up</i>
-                </button>
-        
-            </form>
-    
-            <form action="{{ url_for('get_requests_admin') }}" method="GET" class="col s6 center-align">
-                <button class="btn waves-effect waves-light margin-left" type="submit" name="action">No
-                    <i class="material-icons right">thumb_down</i>
-                </button>
-            </form>
-        </div>
-    </div>
-           
-</div>
+   
+</div> 
+   
 {% endblock %}
 
 

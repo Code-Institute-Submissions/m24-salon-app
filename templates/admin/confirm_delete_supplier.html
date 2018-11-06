@@ -1,6 +1,6 @@
-{% extends admin'base_admin.html'%} {% block content %}
+{% extends 'admin/base_admin.html'%} {% block content %}
 
-<h3>Sure you want to delete supplier:</h3>
+<h3>Are you sure you want to delete:</h3>
 <div class="row">
     <h4> <br> {{supplier.supplier_name}} </h4>
     <a href="{{url_for('get_suppliers')}} " class="waves-effect waves-light btn">No</a>
