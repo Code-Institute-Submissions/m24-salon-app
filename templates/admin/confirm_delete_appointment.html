@@ -5,7 +5,7 @@
    <h4> <br> {{request.first_name}} {{request.last_name}} {{request.request_name}}</h4>
     
     <a href="{{url_for('get_requests_admin')}}" class="waves-effect waves-light btn">No</a>
-    <a href="#" class="waves-effect waves-light btn no_btn">DELETE</a>
+    <a href="{{url_for('delete_request_admin', request_id=request._id)}}" class="waves-effect waves-light btn no_btn">DELETE</a>
 </div>
        
 {% endblock %}

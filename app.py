@@ -69,17 +69,19 @@ def insert_transaction_admin():
 
     
     
-@app.route('/admin/delete_transaction/<transaction_id>') 
-def delete_transaction(transaction_id):
-    
-    mongo.db.transactions.remove({'_id': ObjectId(transaction_id)})
-    return redirect(url_for("get_transactions"))
+
     
 
 @app.route('/admin/confirm_delete_transaction/<transaction_id>') 
 def confirm_delete_transaction(transaction_id):
     transaction = mongo.db.transactions.find_one({'_id': ObjectId(transaction_id)})
-    return render_template('admin/confirm_delete_transaction.html', transaction=transaction)   
+    return render_template('admin/confirm_delete_transaction.html', transaction=transaction) 
+    
+    
+@app.route('/admin/delete_transaction_admin/<transaction_id>', methods=["GET","POST"]) 
+def delete_transaction_admin(transaction_id):
+    mongo.db.transactions.remove({'_id': ObjectId(transaction_id)})
+    return redirect(url_for("show_transactions_admin"))
    
   
 
@@ -209,7 +211,7 @@ def confirm_delete_appointment(request_id):
     request = mongo.db.requests.find_one({'_id': ObjectId(request_id)})
     return render_template('admin/confirm_delete_appointment.html', request=request)        
     
-@app.route('/admin/delete_request_admin/<request_id>', methods=["POST"]) 
+@app.route('/admin/delete_request_admin/<request_id>', methods=["GET","POST"]) 
 def delete_request_admin(request_id):
     mongo.db.requests.remove({'_id': ObjectId(request_id)})
     return redirect(url_for("get_requests_admin"))   

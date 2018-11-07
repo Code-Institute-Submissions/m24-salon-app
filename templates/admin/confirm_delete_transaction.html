@@ -4,10 +4,12 @@
 <div class="row">
 <h4> <br> {{transaction.first_name}} {{transaction.last_name}} {{transaction.transaction_name}}</h4>
     <a href="{{url_for('show_transactions_admin')}} " class="waves-effect waves-light btn">No</a>
-    <a href="{{url_for('delete_transaction', transaction_id=transaction._id)}}" class="waves-effect waves-light btn no_btn">DELETE</a>
+    <a href="{{url_for('delete_transaction_admin', transaction_id=transaction._id)}}" class="waves-effect waves-light btn no_btn">DELETE</a>
 </div>
 
        
 {% endblock %}
+
+
 
 
