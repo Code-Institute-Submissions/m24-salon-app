@@ -28,18 +28,18 @@
                 <a href="{{url_for('get_index')}}" class="brand-logo">&nbsp; Admin</a>
                 <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><a href="{{url_for('get_requests_admin')}}">Appointments</a></li>
-                    <li><a href="{{ url_for('show_transactions_admin')}}">Transactions</a></i>
+                    <li><a href="{{url_for('get_appointments')}}">Appointments</a></li>
+                    <li><a href="{{ url_for('show_transactions')}}">Transactions</a></i>
                     <li><a href="{{url_for('get_services')}}">Manage Services</a></li>
                     <li><a href="{{url_for('get_suppliers')}}">Manage Suppliers</a></li>
-                    <li><a href="{{url_for('get_graphs_admin')}}">Graphs</a></li>
+                    <li><a href="{{url_for('get_graphs')}}">Graphs</a></li>
                     </ul>
                     <ul class="side-nav" id="mobile-demo">
-                    <li><a href="{{url_for('get_requests_admin')}}">Appointments</a></li>
-                    <li><a href="{{ url_for('show_transactions_admin')}}">Transactions</a></i>
+                    <li><a href="{{url_for('get_appointments')}}">Appointments</a></li>
+                    <li><a href="{{ url_for('show_transactions')}}">Transactions</a></i>
                     <li><a href="{{url_for('get_services')}}">Manage Services</a></li>
                     <li><a href="{{url_for('get_suppliers')}}">Manage Suppliers</a></li>
-                    <li><a href="{{url_for('get_graphs_admin')}}">Graphs</a></li>
+                    <li><a href="{{url_for('get_graphs')}}">Graphs</a></li>
                 </ul>
             </div>
         </nav>
@@ -53,6 +53,7 @@
     
     
     {% endblock content %}
+</div>
 </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
@@ -77,12 +78,9 @@
             
         $('.modal').modal();
         
-
-
-
       
         
-    </script>
+    </script> 
 </body>
 
 </html>

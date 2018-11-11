@@ -1,22 +1,21 @@
-{% extends 'admin/base_admin.html' %}
+{% extends 'admin/base_admin.html' %}{% block content %}
 
-{% block content %}
-<div class="container">
+
 <h4>Book an Appointment</h4>
-  <form action="{{ url_for('insert_request_admin')}}" method="POST" class="col s12">
 
-    <div class="row">
-      <div class="input-field col s12">
-        <i class="material-icons prefix">today</i>
-        <input type="text" id="due_date" name="due_date" class="datepicker">
-        <label for="icon_prefix">choose a date we'll sort out the time later</label>
-      </div>
+<form action="{{ url_for('insert_appointment')}}" method="POST" class="col s12">
+  <div class="row">
+    <div class="input-field col s12">
+      <i class="material-icons prefix">today</i>
+      <input type="text" id="due_date" name="due_date" class="datepicker">
+      <label for="icon_prefix">choose a date we'll sort out the time later</label>
+    </div>
+  </div>  
       
-    
-    <div class="row">
-      <div class="input-field col s12">
-        <i class="material-icons prefix">poll</i>
-        <select id="category" name="category_name">
+  <div class="row">
+    <div class="input-field col s12">
+      <i class="material-icons prefix">poll</i>
+      <select id="category" name="name">
           <option value="" disabled selected>Choose hair treatment </option>
           {% for service in services %}          
           <option value="{{service.service_name}}">{{ service.service_name }}</option>
@@ -24,6 +23,7 @@
           </select>
         <label>Hair treatment</label>
       </div>
+    </div>  
    
       
     <div class="row">
@@ -39,7 +39,7 @@
     <div class="row">
       <div class="input-field col s12">
         <i class="material-icons prefix">assignment</i>
-        <input id="first_name" name="first_name" type="text" class="validate">
+        <input id="first_name" name="first_name" type="text" class="validate"required>
         <label for="icon_prefix">First Name</label>
       </div>
     </div>
@@ -47,7 +47,7 @@
     <div class="row">
       <div class="input-field col s12">
         <i class="material-icons prefix">assignment</i>
-        <input id="last_name" name="last_name" type="text" class="validate">
+        <input id="last_name" name="last_name" type="text" class="validate"required>
         <label for="icon_prefix">Last Name</label>
       </div>
     </div>
@@ -55,18 +55,18 @@
     <div class="row">
       <div class="input-field col s12">
         <i class="material-icons prefix">assignment</i>
-        <input id="email" name="email" type="email" class="validate">
+        <input id="email" name="email" type="email" class="validate" required>
         <label for="icon_prefix">Email</label>
       </div>
     </div>
 
-    <div class="row">
-      <div class="input-field col s12">
-        <i class="material-icons prefix">assignment</i>
-        <input id="mobile" name="mobile" type="text" class="validate">
-        <label for="icon_prefix">Mobile</label>
-      </div>
+   <div class="row">
+    <div class="input-field col s12">
+      <i class="material-icons prefix ">phone</i>
+      <input id="mobile" name="mobile" type="tel"  pattern="^\d{2}\d{2}\d{2}\d{2}\d{2}$" value="{{appointment.mobile}}" required>
+      <label for="icon_prefix">10 digits</label>
     </div>
+  </div>
     
    <button class="btn waves-effect waves-light" type="submit" name="action">Submit appointment
       <i class="material-icons right">add_identity</i>
@@ -77,6 +77,11 @@
 
 
 {% endblock content %}
+
+
+
+
+
 
 
 

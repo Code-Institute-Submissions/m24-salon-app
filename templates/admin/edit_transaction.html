@@ -1,0 +1,85 @@
+{% extends 'admin/base_admin.html'%} 
+{% block content %}
+
+<h4>Edit transaction</h4>
+
+<form action="{{ url_for('update_transaction', transaction_id=transaction._id) }}" method="POST", "GET" class="col s12">
+
+
+
+  <div class="row">
+    <div class="input-field col s12">
+      <i class="material-icons prefix">today</i>
+      <input type="text"  id="due_date" name="due_date" class="datepicker" value="{{transaction.due_date}}" >
+      <label for="icon_prefix">choose a date of transaction</label>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="input-field col s12">
+      <i class="material-icons prefix ">poll</i>
+        <input id="client" type="tel" name ="client"  value="{{transaction.client}}" require>
+      <label>Name</label>
+    </div>
+  </div>        
+  
+   <div class="row">
+    <div class="input-field col s12">
+      <i class="material-icons prefix ">phone</i>
+      <input id="mobile" name="mobile" type="tel"  pattern="^\d{2}\d{2}\d{2}\d{2}\d{2}$" value="{{transaction.mobile}}" require>
+      <label for="icon_prefix">ten digit</label>
+    </div>
+  </div>      
+
+  <div class="row">
+    <div class="input-field col s12">
+      <i class="material-icons prefix ">poll</i>
+      <input value="{{transaction.treatment}}" id="treatment" name="service" type="text"  value="{{transaction.treatment}}">
+      <label for="icon_prefix">Service</label>
+    </div>
+  </div>
+
+   <div class="row">
+    <div class="input-field col s12">
+      <i class="material-icons prefix ">poll</i>
+      <input id="transaction.supplier"id="supplier" name="supplier"  value="{{transaction.supplier}}">
+      <label for="icon_prefix">Supplier</label>
+    </div>
+  </div> 
+
+  <div class="row">
+    <div class="input-field col s12">
+      <i class="material-icons prefix ">euro_symbol</i>
+      <input value="{{transaction.moneyin}}" id="moneyin" name="moneyin" type="number" class="validate" value="{{transaction.moneyin}}">
+      <label for="icon_prefix">Credit</label>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="input-field col s12">
+      <i class="material-icons prefix">euro_symbol</i>
+      <input value="{{transaction.moneyout}}" id="moneyout" name="moneyout" type="number" class="validate" value="{{transaction.moneyout}}">
+      <label for="icon_prefix">Debit</label>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="input-field col s12">
+      <i class="material-icons prefix">assignment</i>
+      <input id="descrwrite" name="descrwrite" type="text" class="validate" value="{{transaction.descrwrite}}">
+      <label for="icon_prefix">Notes</label>
+    </div>
+  </div>
+
+<div class=" row ">
+  <button class="btn waves-effect waves-light " type="submit" >Submit
+      <i class="material-icons right ">add_identity</i>
+    </button> 
+  </div>  
+    
+  
+    </form>
+
+    
+    {% endblock content %}
+

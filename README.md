@@ -101,7 +101,9 @@ future features will be separated pages for incoming and out going transactions.
 
 ## Testing
 This Application was tested across a range of browsers
-it has gone through w3d.com and been put through various jasmin tests
+it has gone through w3d.com and been put through various tests
+<a href="tests.html" >*see tests*</a>
+
 
 
 ## Graphic design front end
