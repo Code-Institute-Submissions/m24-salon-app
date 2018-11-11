@@ -14,16 +14,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dc/2.1.8/dc.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>
     
-    
-    <link rel="icon" type="static/image/png" href="static/images/favicon.png">
-
-</head>
 <title>M24 Admin</title>
-
+</head>
 <body>
     <header>
         <nav>
-            
             <div class="nav-wrapper">
                 <a href="{{url_for('get_index')}}" class="brand-logo">&nbsp; Admin</a>
                 <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
@@ -43,7 +38,7 @@
                 </ul>
             </div>
         </nav>
-        <div class="m24logo"><img src="/static/images/m24logo.jpg"  />
+        <div class="m24logo"><img src="/static/images/m24logo.jpg" alt="M24 logo" />
         </div>
     </header>
     <div class="container">
@@ -57,7 +52,7 @@
 </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-    <script type="text/javascript">
+    <script>
         $(document).ready(function() {
             $('.collapsible').collapsible();
             $('select').material_select();

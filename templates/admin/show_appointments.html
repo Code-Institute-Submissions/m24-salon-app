@@ -17,7 +17,11 @@
                             <div class="box-space">
                             <a href="{{url_for('confirm_delete_appointment', appointment_id =appointment._id)}}" class="waves-effect waves-light btn btn_small">Del</a>
                             <a href="{{url_for('edit_appointment', appointment_id =appointment._id)}}" class="waves-effect waves-light btn btn_small blue">Edit</a>
-                            <a href="tel:{{appointment.mobile}}"><i class="material-icons prefix" >phone</i></a>
+                            <a href="https://wa.me/{{appointment.mobile}}?text=Thanks'm%20for%20calling%20us%20for%20an%20appointment,%20we%20can%20fit%20you%20in%20at">
+
+    
+                                
+                                <i class="material-icons prefix" >phone</i></a>
                         </div>
                     </div>
                         {% if appointment.is_urgent %}
